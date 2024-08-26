@@ -1,7 +1,7 @@
-
-
 WITH subquery AS (
 SELECT DISTINCT
+    f.F01130 AS carteira,
+    f.F01130 AS carteira_ref,
     (CASE
         WHEN f.F01130 IN ('E1', 'Massificado PJ', 'PF', 'Massificado PJ - E2', 'E2', 'Autos Santander', 'Alto Ticket', 'Massificado PJ','Diligência Varejo Massificado') THEN 'Varejo'
         WHEN f.F01130 = 'Créditos Especiais - Special Credits' AND x.F47448 IN ('E2 POLO', 'BAIXO TICKET') THEN 'Varejo'
@@ -17,6 +17,8 @@ LEFT JOIN [ramaprod].[dbo].T02913 AS x ON v.F47449 = x.ID
 LEFT JOIN [ramaprod].[dbo].T00035 AS f ON a.F01187 = f.ID
 WHERE f.F01130 IS NOT NULL
 )
-SELECT 
-    setor
+SELECT DISTINCT
+    setor,
+    carteira,
+    carteira_ref
 FROM subquery;

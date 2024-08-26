@@ -48,6 +48,7 @@ LEFT JOIN [ramaprod].[dbo].T02677 AS y ON c.F43646 = y.ID
 LEFT JOIN [ramaprod].[dbo].T00083 AS g ON c.F14465 = g.ID
 LEFT JOIN [ramaprod].[dbo].T00083 AS r ON c.F14465 = r.ID  
 LEFT JOIN [ramaprod].[dbo].T00046 AS s ON r.F00488 = s.ID
+
 WHERE c.F25017 <> 2 AND c.F14474 IS NOT NULL
 
 

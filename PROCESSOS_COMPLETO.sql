@@ -231,7 +231,8 @@ SELECT
 	CASE
 		WHEN j.F01132 IN ('Acordo - Negociação (Principal)', 'Acordo cancelado', 'Acordo - Termo Enviado para Protocolo') THEN 'Processual'
 		ELSE NULL
-	END) AS tipo_acordo			
+	END) AS tipo_acordo,
+	MAX(aa.F00156) AS tipo_acao	
 FROM [ramaprod].[dbo].T00069 AS a
 LEFT JOIN [ramaprod].[dbo].T00003 AS b ON a.F08501 = b.ID
 LEFT JOIN [ramaprod].[dbo].T00064 AS c ON a.F01133 = c.ID

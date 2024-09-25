@@ -1,5 +1,3 @@
-# Teste de pull
-
 WITH DossieEventos AS (
     SELECT
         p.F27086 AS cpf,

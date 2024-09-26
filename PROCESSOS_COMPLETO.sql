@@ -232,7 +232,23 @@ SELECT
 		WHEN j.F01132 IN ('Acordo - Negociação (Principal)', 'Acordo cancelado', 'Acordo - Termo Enviado para Protocolo') THEN 'Processual'
 		ELSE NULL
 	END) AS tipo_acordo,
-	MAX(aa.F00156) AS tipo_acao	
+	MAX(aa.F00156) AS tipo_acao,
+	MIN(
+		CASE
+			WHEN j.F01132 IN ('Cobrança 2.1 -  Citação devedor principal', 'Cobrança 2.11 -  Citação por carta precatória positiva', 'Cobrança 2.12 - Citação por acordo', 'Monitória 2.1 - Citação devedor principal',
+				'Monitória 2.11- Citação por carta precatória positiva', 'Monitória 2.12 - Citação por acordo', 'Execução 3.1 - Citação devedor principal', 'Execução 3.11 - Citação por Carta Precatória positiva',
+				'Execução 3.14 – Citação por acordo', 'BA 3.6 - Citação efetivada (com retomada)', 'BA 3.8 - Citação por carta precatória positiva','Cobrança 2.2 -  Citação coobrigado',
+				'Monitória 2.2 - Citação coobrigado', 'Execução 3.2 - Citação coobrigado') THEN j.F01132
+			ELSE NULL
+		END) AS evento_citacao_bi,
+	MIN(
+		CASE
+			WHEN j.F01132 IN ('Cobrança 2.1 -  Citação devedor principal', 'Cobrança 2.11 -  Citação por carta precatória positiva', 'Cobrança 2.12 - Citação por acordo', 'Monitória 2.1 - Citação devedor principal',
+				'Monitória 2.11- Citação por carta precatória positiva', 'Monitória 2.12 - Citação por acordo', 'Execução 3.1 - Citação devedor principal', 'Execução 3.11 - Citação por Carta Precatória positiva',
+				'Execução 3.14 – Citação por acordo', 'BA 3.6 - Citação efetivada (com retomada)', 'BA 3.8 - Citação por carta precatória positiva', 'Cobrança 2.2 -  Citação coobrigado',
+				'Monitória 2.2 - Citação coobrigado', 'Execução 3.2 - Citação coobrigado') THEN a.F00385
+			ELSE NULL
+		END) AS data_citacao_bi
 FROM [ramaprod].[dbo].T00069 AS a
 LEFT JOIN [ramaprod].[dbo].T00003 AS b ON a.F08501 = b.ID
 LEFT JOIN [ramaprod].[dbo].T00064 AS c ON a.F01133 = c.ID
@@ -261,23 +277,3 @@ LEFT JOIN [ramaprod].[dbo].T02677 AS y ON d.F43646 = y.ID
 LEFT JOIN [ramaprod].[dbo].T00034 AS aa ON d.F01122 = aa.ID
 GROUP BY a.F04461, d.ID
 ORDER BY criado_em DESC;
-
-
-
-
--- Tipo de citações
-
-	--* Fisicamente
-	--* ARq
-	--* Mandado 
-	--* Eletrônico
-	--* Edital
-	--* Acordo
-
---Acordo - Negociação (Principal) -- Não formalizado
---Acordo cancelado -- Cancelado
---Acordo - Termo Enviado para Protocolo -- Formalizado
-
-
-Indicação do Acompanhamento
-Dentro da Régua de Ajuizamento

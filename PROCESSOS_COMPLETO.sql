@@ -140,21 +140,21 @@ SELECT
 	MAX(
 		CASE
 			WHEN j.F01132 IN ('BA 6.1 - Conversão para execução deferida', 'BA 3.1 - Retomada efetivada', 
-				'Execução 8.3.4 - Remoção de berm penhorado', 'BA 4.14 - Retomada efetivada', 'BA 8.6 - Entrega amigável realizada', 
+				'Execução 8.3.4 - Remoção de bem penhorado', 'BA 4.14 - Retomada efetivada', 'BA 8.6 - Entrega amigável realizada', 
 				'Venda de Bem em Leilão') THEN j.F01132
 			ELSE NULL
 		END) AS evento_retomada,
 	MAX(
 		CASE
 			WHEN j.F01132 IN ('BA 6.1 - Conversão para execução deferida', 'BA 3.1 - Retomada efetivada', 
-				'Execução 8.3.4 - Remoção de berm penhorado', 'BA 4.14 - Retomada efetivada', 'BA 8.6 - Entrega amigável realizada', 
+				'Execução 8.3.4 - Remoção de bem penhorado', 'BA 4.14 - Retomada efetivada', 'BA 8.6 - Entrega amigável realizada', 
 				'Venda de Bem em Leilão') THEN a.F00385
 			ELSE NULL
 		END) AS data_retomada,
 	MAX(
 		CASE
 			WHEN j.F01132 IN ('BA 6.1 - Conversão para execução deferida', 'BA 3.1 - Retomada efetivada', 
-				'Execução 8.3.4 - Remoção de berm penhorado', 'BA 4.14 - Retomada efetivada', 'BA 8.6 - Entrega amigável realizada', 
+				'Execução 8.3.4 - Remoção de bem penhorado', 'BA 4.14 - Retomada efetivada', 'BA 8.6 - Entrega amigável realizada', 
 				'Venda de Bem em Leilão') THEN b.F00689
 			ELSE NULL
 		END) AS advogado_retomada,

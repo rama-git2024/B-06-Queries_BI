@@ -2,6 +2,16 @@
 SELECT
     c.F14474 AS dossie,
     d.F01130 AS carteira,
+    x.F47448 AS segmento,
+    CASE 
+        WHEN d.F01130 IN ('E1', 'Massificado PJ', 'PF', 'Massificado PJ - E2', 'E2', 'Autos Santander', 'Alto Ticket', 'Massificado PJ','Diligência Varejo Massificado') THEN 'Varejo'
+        WHEN d.F01130 = 'Créditos Especiais - Special Credits' AND x.F47448 IN ('E2 POLO', 'BAIXO TICKET') THEN 'Varejo'
+        WHEN d.F01130 IN ('Empresas 3 - Judicial Especializado', 'Empresas 3 - Núcleo Massificado', 'Créditos Especiais - Special Credit') AND x.F47448 = 'E3' THEN 'E3'
+        WHEN d.F01130 IN ('Falência', 'Falência - Créditos Especiai', 'Falência - Empresas 1 e 2', 'Falência - Empresas 3', 'Recuperação Judicial', 'Recuperação Judicial - Créditos Especiais',
+            'Recuperação Judicial - Empresas 1 e 2', 'Recuperação Judicial - Empresas 3', 'Recuperação Judicial - Empresas 1 e 2 Baixo Ticket', 'Recuperação Judicial - Produtor Rural') THEN 'Falência e RJ'
+        WHEN d.F01130 = 'Credito Rural' THEN 'Agro'
+        ELSE 'Outro'
+    END AS setor,
     CASE 
     	WHEN c.F25017 = 1 THEN 'Ativo'
     	WHEN c.F25017 = 2 THEN 'Encerrado'
@@ -35,7 +45,22 @@ SELECT
     e.F00403 AS veiculo,
     a.F11574 AS valor,
     a.F15678 AS valor_garantia,
-    f.F00162 AS fase
+    f.F00162 AS fase,
+    CASE
+        WHEN c.F02571 LIKE '%Grande do sul%' THEN 'Rio Grande do Sul'
+        WHEN c.F02571 LIKE '%Paraná%' THEN 'Paraná'
+        WHEN c.F02571 LIKE '%Catarina%' THEN 'Santa Catarina'
+        WHEN c.F02571 LIKE '%Distrito%' THEN 'Distrito Federal'
+        WHEN c.F02571 LIKE '%Paulo%' THEN 'São Paulo'
+        WHEN c.F02571 LIKE '%Janeiro%' THEN 'Rio de Janeiro'
+        WHEN c.F02571 LIKE '%Bahia%' THEN 'Bahia'
+        WHEN c.F02571 LIKE '%Cear%' THEN 'Ceará'
+        WHEN c.F02571 LIKE '%Mato Grosso do Sul%' THEN 'Mato Grosso do Sul'
+        WHEN c.F02571 LIKE '%Goiás%' THEN 'Goiás'
+        WHEN c.F02571 LIKE '%Pern%' THEN 'Pernambuco'
+        WHEN c.F02571 LIKE '%Rond%' THEN 'Rondônia'
+        ELSE 'Outro'
+    END AS estado
 FROM [ramaprod].[dbo].T00074 AS a
 LEFT JOIN [ramaprod].[dbo].T01292 AS b ON a.F15677 = b.ID
 LEFT JOIN [ramaprod].[dbo].T00041 AS c ON a.F15674 = c.ID
@@ -48,8 +73,6 @@ LEFT JOIN [ramaprod].[dbo].T02677 AS y ON c.F43646 = y.ID
 LEFT JOIN [ramaprod].[dbo].T00083 AS g ON c.F14465 = g.ID
 LEFT JOIN [ramaprod].[dbo].T00083 AS r ON c.F14465 = r.ID  
 LEFT JOIN [ramaprod].[dbo].T00046 AS s ON r.F00488 = s.ID
-
+LEFT JOIN [ramaprod].[dbo].T00030 AS v ON c.F05220 = v.ID
+LEFT JOIN [ramaprod].[dbo].T02913 AS x ON v.F47449 = x.ID
 WHERE c.F25017 <> 2 AND c.F14474 IS NOT NULL
-
-
-
